@@ -20,6 +20,10 @@ import TableCell from "@material-ui/core/TableCell";
 import TableBody from "@material-ui/core/TableBody";
 import TableRow from "@material-ui/core/TableRow";
 
+// Charts
+import { LineChart } from "react-chartkick";
+import "chart.js";
+
 const TabContainer = props => (
   <Typography component="div" style={{ padding: 8 * 3 }}>
     {props.children}
@@ -61,7 +65,21 @@ function App() {
           </Table>
         </TabContainer>
       )}
-      {value === 1 && <TabContainer>Graph</TabContainer>}
+      {value === 1 && (
+        <TabContainer>
+          <LineChart
+            data={widgets.reduce((data, widget) => {
+              const year = new Date(widget.timestamp).getFullYear();
+
+              data.hasOwnProperty(year)
+                ? (data[year] += widget.revenue)
+                : (data[year] = widget.revenue);
+
+              return data;
+            }, {})}
+          />
+        </TabContainer>
+      )}
     </div>
   );
 }
