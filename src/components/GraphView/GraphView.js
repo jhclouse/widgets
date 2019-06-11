@@ -8,14 +8,14 @@ import "chart.js";
 //
 
 const rollUpData = widgets => {
-  const dataReducer = (outputDataObject, widget) => {
+  const dataReducer = (data, widget) => {
     const year = new Date(widget.timestamp).getFullYear();
 
-    outputDataObject.hasOwnProperty(year)
-      ? (outputDataObject[year] += widget.revenue)
-      : (outputDataObject[year] = widget.revenue);
+    data.hasOwnProperty(year)
+      ? (data[year] += widget.revenue)
+      : (data[year] = widget.revenue);
 
-    return outputDataObject;
+    return data;
   };
 
   return widgets.reduce(dataReducer, {});
